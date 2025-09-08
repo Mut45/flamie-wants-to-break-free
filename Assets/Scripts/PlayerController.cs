@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody2D rb;
     private Animator anim;
+    public bool isOnFire = true;
     private float Move;
     private bool jumpingEnabled = true;
     private bool horizontalEnabled = true;

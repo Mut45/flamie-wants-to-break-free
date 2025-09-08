@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerLadderMovement : MonoBehaviour
 {
     private float verticalInput;
-    private float speed = 4f;
+    private float speed = 2f;
     private bool isLadder = false;
     private bool isClimbing = false;
     
