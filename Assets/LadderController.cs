@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LadderController : MonoBehaviour
 {
-    private float burnDuration = 2f;
-    private float respawnDelay = 2f;
+    private float burnDuration = 1.5f;
+    private float respawnDelay = 5f;
     private bool isBurning = false;
     private SpriteRenderer ladderRenderer;
     private Collider2D ladderCollider;
@@ -28,7 +28,7 @@ public class LadderController : MonoBehaviour
             PlayerController playerController = other.GetComponent<PlayerController>();
             if (playerController.isOnFire)
             {
-                StartCoroutine(BurnAndRespawnCoroutine());
+                StartBurning();
             }
         }
     }

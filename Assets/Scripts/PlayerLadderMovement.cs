@@ -9,10 +9,10 @@ public class PlayerLadderMovement : MonoBehaviour
     private float speed = 2f;
     private bool isLadder = false;
     private bool isClimbing = false;
-    
-    private int groundLayerIndex;
+    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject platformObject;
+    private int platformLayerIndex;
     private int playerLayerIndex;
-    private bool ignoreCollisionFlag = false;
     public PlayerFlip playerFlip;
     public PlayerController playerController;
     public Collider2D playerCollider;
@@ -22,8 +22,10 @@ public class PlayerLadderMovement : MonoBehaviour
 
     void Start()
     {
-        groundLayerIndex = LayerMask.NameToLayer("Ground");
-        playerLayerIndex = LayerMask.NameToLayer("Player");
+        // platformLayerIndex = LayerMask.NameToLayer("Platform");
+        // playerLayerIndex = LayerMask.NameToLayer("Player");
+        // Collider2D playerCollider = playerObject.GetComponent<Collider2D>();
+        // Collider2D platformObject = platformObject.GetComponent<Collider2D>();
     }
     void Update()
     {
@@ -42,16 +44,14 @@ public class PlayerLadderMovement : MonoBehaviour
             // Disable gravity when on ladder
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(0, verticalInput * speed);
-            Physics2D.IgnoreLayerCollision(playerLayerIndex, groundLayerIndex, true);
+            //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, true);
             playerController.SetHorizontalEnabled(false);
             playerFlip.SetFlipEnabled(false);
-            ignoreCollisionFlag = true;
         }
         else
         {
             // Reduce speed as player exits the ladder
-            Physics2D.IgnoreLayerCollision(playerLayerIndex, groundLayerIndex, false);
-            ignoreCollisionFlag = false;
+            //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, false);
             rb.gravityScale = physicsSettingsValues.gravityScale;
             playerController.SetHorizontalEnabled(true);
             playerFlip.SetFlipEnabled(true);
