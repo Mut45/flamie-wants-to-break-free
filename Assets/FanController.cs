@@ -76,8 +76,9 @@ public class FanController : MonoBehaviour
         {
             origin = transform.position;
         }
-        Vector2 rigidbodyCenterOfMass = rb.centerOfMass;
+        Vector2 rigidbodyCenterOfMass = rb.worldCenterOfMass;
         float distanceFromOrigin = Vector2.Distance(rigidbodyCenterOfMass, origin);
+        Debug.Log("distance from origin: " + distanceFromOrigin);
 
         // 2. Get the estimated maximum distance from the origin to the end point of the trigger box
         // Since the extent is half of the size of 
@@ -100,6 +101,7 @@ public class FanController : MonoBehaviour
                 continue;
             }
             float fallOff = CalculateFalloff(rb);
+            Debug.Log("falloff: " + fallOff);
             Vector2 force = airflowDirection * airflowStrength * fallOff;
 
             // Adding resistance if the character/movable object is moving against the wind
@@ -109,13 +111,6 @@ public class FanController : MonoBehaviour
                 force += airflowDirection * (-resistanceStrentgh) * resistanceMultiplier;
             }
             rb.AddForce(force, ForceMode2D.Force);
-        }   
-        
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }
