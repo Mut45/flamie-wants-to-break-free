@@ -8,13 +8,16 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody2D rb;
     private Animator anim;
+    public bool isOnFire = true;
     private float Move;
     private bool jumpingEnabled = true;
     private bool horizontalEnabled = true;
     public float speed;
     public float jumpForce;
+    private float flameOffDuration = 3f;
     public Vector2 boxSize;
     public float rayCastDistance;
+    public LayerMask platformLayer;
     public LayerMask groundLayer;
     void Start()
     {
@@ -56,9 +59,24 @@ public class PlayerController : MonoBehaviour
     {
         horizontalEnabled = input;
     }
+    public void StartExtinguished()
+    {
+        if (!isOnFire)
+        {
+            return;
+        }
+        StartCoroutine(ExtinguishCoroutine());
+    }
+    private System.Collections.IEnumerator ExtinguishCoroutine()
+    {
+        isOnFire = false;
+        yield return new WaitForSeconds(flameOffDuration);
+        isOnFire = true;
+
+    }
     public bool CheckIsGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, rayCastDistance, groundLayer))
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, rayCastDistance, groundLayer) || Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, rayCastDistance, platformLayer))
         {
             return true;
         }
