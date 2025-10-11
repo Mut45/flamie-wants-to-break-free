@@ -14,22 +14,27 @@ public enum FanDirection
 }
 public class FanController : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     private Collider2D _triggerZone;
-    public float airflowStrength = 15.0f;
-    public float resistanceMultiplier = 1.5f;
-    public FanDirection fanDirection = FanDirection.Right; // Expose it in the inspector for testing
+    public float airflowStrength = 200.0f;
+    public float resistanceMultiplier = 10.0f;
+    public FanDirection fanDirection = FanDirection.Left; // Expose it in the inspector for testing
     private readonly HashSet<Rigidbody2D> _enteredBodies = new();
     public AnimationCurve fallOffCurve = AnimationCurve.Linear(0, 1, 1, 0.4f); // Use a linear curve for the magnitude falloff.
     public Transform triggerZoneOrigin; // The origin point of the fan nozzle
     public Transform triggerZoneEndpoint;
+
+    [Header("Per-direction strength multipliers")]
+    [Tooltip("Scale the base airflowStrength depending on the fan's facing direction.")]
+    public float strengthLeft = 1.0f;
+    public float strengthRight = 1.0f;
+    public float strengthUp = 0.15f; // Lower this value so that the gravity doesnt overpower the airflow strength.s
+
     void Awake()
     {
         _triggerZone = GetComponentInChildren<Collider2D>();
         
     }
-    void OnTriggerEnter2D(Collider2D collision)
+    public void OnChildTriggerEnter2D(Collider2D collision)
     {
         // 1. Check if the object entering is in the affected layer
         // 2. Add all the rigid bodies into the bodies private attribute
@@ -39,7 +44,7 @@ public class FanController : MonoBehaviour
             _enteredBodies.Add(rb);
         }
     }
-    void OnTriggerExit2D(Collider2D collision)
+    public void OnChildTriggerExit2D(Collider2D collision)
     {
         var rb = collision.attachedRigidbody;
         if (rb != null) _enteredBodies.Remove(rb);
@@ -55,8 +60,12 @@ public class FanController : MonoBehaviour
             case FanDirection.Up:
                 return Vector2.up;
             default:
-                return Vector2.right;
+                return Vector2.left;
         }
+    }
+    public void SetAirflowDirection(FanDirection dir)
+    {
+        fanDirection = dir;
     }
     private float CalculateFalloff(Rigidbody2D rb)
     {
@@ -87,11 +96,26 @@ public class FanController : MonoBehaviour
         float distanceNormalized = Mathf.Clamp01(distanceFromOrigin / maximumDistance);
         return Mathf.Max(0f, fallOffCurve.Evaluate(distanceNormalized));
     }
+
+    private float GetDirMultiplier(FanDirection dir)
+    {
+        float dirMultiplier = 1f;
+        switch (fanDirection)
+        {
+            case FanDirection.Left: dirMultiplier = strengthLeft; break;
+            case FanDirection.Right: dirMultiplier = strengthRight; break;
+            case FanDirection.Up: dirMultiplier = strengthUp; break;
+        }
+        return dirMultiplier;
+    }
     void FixedUpdate()
     {
         Vector2 airflowDirection = GetAirflowDirection();
+        Debug.Log("[Fan] Current airflow direction:" + airflowDirection);
         if (airflowDirection.sqrMagnitude < 1e-6f) return;
         airflowDirection.Normalize();
+
+        float dirMultiplier = GetDirMultiplier(fanDirection);
         // Calculate the force to be added to each affected rigid body. Force = direction vector * strength * falloff
         foreach (var rb in _enteredBodies)
         {
@@ -100,13 +124,13 @@ public class FanController : MonoBehaviour
                 continue;
             }
             float fallOff = CalculateFalloff(rb);
-            Vector2 force = airflowDirection * airflowStrength * fallOff;
+            Vector2 force = airflowStrength * dirMultiplier * fallOff * airflowDirection;
 
             // Adding resistance if the character/movable object is moving against the wind
             float resistanceStrentgh = Vector2.Dot(rb.velocity, airflowDirection);
             if (resistanceStrentgh < 0f)
             {
-                force += airflowDirection * (-resistanceStrentgh) * resistanceMultiplier;
+                force += (-resistanceStrentgh) * resistanceMultiplier * airflowDirection;
             }
             rb.AddForce(force, ForceMode2D.Force);
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FanDirectionController : MonoBehaviour
 {
+    public FanController fanController;
     public Transform triggerZoneOrigin;
     public Transform triggerZoneEndpoint;
     public BoxCollider2D windTriggerBox;
@@ -11,6 +12,10 @@ public class FanDirectionController : MonoBehaviour
     public FanDirection direction = FanDirection.Left;
     // Start is called before the first frame update
 
+    void Start()
+    {
+        ApplyDirection();
+    }
     public void RotateLeft()
     {
         switch (direction)
@@ -50,7 +55,7 @@ public class FanDirectionController : MonoBehaviour
             case FanDirection.Left:
                 return 0f;
             case FanDirection.Up:
-                return 90f;
+                return -90f;
             case FanDirection.Right:
                 return 180f;
             default:
@@ -78,6 +83,10 @@ public class FanDirectionController : MonoBehaviour
         // windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
         windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
         triggerZoneEndpoint.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
+        if (fanController != null)
+        {
+            fanController.SetAirflowDirection(direction);
+        }
 
     }
     private void OnDrawGizmos()
@@ -97,6 +106,20 @@ public class FanDirectionController : MonoBehaviour
             var b = windTriggerBox.bounds;
             Gizmos.color = new Color(1f, 1f, 0f, 0.6f); // yellow
             Gizmos.DrawWireCube(b.center, b.size);
+        }
+            Gizmos.color = Color.red;
+
+        if (triggerZoneEndpoint != null)
+        {
+            // Draw a small sphere to show its position
+            Gizmos.DrawSphere(triggerZoneEndpoint.position, 0.1f);
+
+            // Optionally draw a line from the origin to it for clarity
+            if (triggerZoneOrigin != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(triggerZoneOrigin.position, triggerZoneEndpoint.position);
+            }
         }
     }
 }
