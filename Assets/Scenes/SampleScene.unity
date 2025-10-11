@@ -150,7 +150,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1126, y: 0.1126, z: 0.1126}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 872006876}
   m_Father: {fileID: 114080453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114080449
@@ -164,6 +165,8 @@ GameObject:
   - component: {fileID: 114080453}
   - component: {fileID: 114080452}
   - component: {fileID: 114080450}
+  - component: {fileID: 114080455}
+  - component: {fileID: 114080454}
   m_Layer: 0
   m_Name: Fan
   m_TagString: Untagged
@@ -277,15 +280,75 @@ Transform:
   m_GameObject: {fileID: 114080449}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.09, y: -1.47, z: 0}
+  m_LocalPosition: {x: 2.81, y: -1.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 67122967}
-  - {fileID: 633357350}
-  - {fileID: 872006876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114080454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114080449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 336b5ce6d0213458fb2513c8b8442635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  airflowStrength: 200
+  resistanceMultiplier: 10
+  fanDirection: 0
+  fallOffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: -0.6
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.4
+      inSlope: -0.6
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  triggerZoneOrigin: {fileID: 67122967}
+  triggerZoneEndpoint: {fileID: 633357350}
+  strengthLeft: 1
+  strengthRight: 1
+  strengthUp: 0.1
+--- !u!114 &114080455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114080449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581a35a683ac94c86883eacf488aef30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fanController: {fileID: 114080454}
+  triggerZoneOrigin: {fileID: 67122967}
+  triggerZoneEndpoint: {fileID: 633357350}
+  windTriggerBox: {fileID: 872006877}
+  windTriggerZone: {fileID: 872006876}
+  direction: 0
 --- !u!1 &260595096
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,12 +903,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633357349}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.18, y: -0.11, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.18, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 114080453}
+  m_Father: {fileID: 872006876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &717096833
 GameObject:
@@ -1143,8 +1206,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 872006876}
-  - component: {fileID: 872006878}
   - component: {fileID: 872006877}
+  - component: {fileID: 872006878}
   m_Layer: 0
   m_Name: FanWindZone
   m_TagString: Untagged
@@ -1160,12 +1223,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872006875}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.2, y: 0, z: 0}
+  m_LocalScale: {x: 8.880994, y: 8.880994, z: 8.880994}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 114080453}
+  m_Children:
+  - {fileID: 633357350}
+  m_Father: {fileID: 67122967}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &872006877
 BoxCollider2D:
@@ -1221,38 +1285,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 872006875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 336b5ce6d0213458fb2513c8b8442635, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fc60d00a14f346ce9d0206c29e0cd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airflowStrength: 250
-  resistanceMultiplier: 10
-  fanDirection: 0
-  fallOffCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: -0.6
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0.4
-      inSlope: -0.6
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  triggerZoneOrigin: {fileID: 67122967}
-  triggerZoneEndpoint: {fileID: 633357350}
+  target: {fileID: 114080454}
 --- !u!4 &898562774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2016161223061850775, guid: 23c8150eee23740a79ac543275b2a404, type: 3}
