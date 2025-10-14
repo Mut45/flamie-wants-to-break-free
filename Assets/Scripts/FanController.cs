@@ -111,7 +111,6 @@ public class FanController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 airflowDirection = GetAirflowDirection();
-        Debug.Log("[Fan] Current airflow direction:" + airflowDirection);
         if (airflowDirection.sqrMagnitude < 1e-6f) return;
         airflowDirection.Normalize();
 

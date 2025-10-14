@@ -19,6 +19,10 @@ public class PlayerFlip : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         SetupDirectionalFlipByScale();
     }
+    public bool isFacingRight()
+    {
+        return faceRight;
+    }
 
     public void SetFlipEnabled(bool input)
     {
