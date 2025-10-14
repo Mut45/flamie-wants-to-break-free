@@ -1465,7 +1465,8 @@ Transform:
   m_LocalPosition: {x: -5.153, y: -1.187, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1407944588}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1205777254
@@ -1621,7 +1622,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOnFire: 1
   speed: 5
-  jumpForce: 20
+  jumpForce: 25
+  playerFlip: {fileID: 1205777261}
   boxSize: {x: 0.6, y: 0.23}
   rayCastDistance: 0.43
   platformLayer:
@@ -1630,6 +1632,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  jumpDustPrefab: {fileID: 4797815121946474545, guid: 1457d8d36ab884e96906b32002003e9d, type: 3}
+  dustSpawnPoint: {fileID: 1407944588}
+  landDustPrefab: {fileID: 1389094781240433673, guid: b599ce1ddf67646ddb233acc8dc6bdf8, type: 3}
+  landDustFowardOffset: 0.22
 --- !u!114 &1205777261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2867,6 +2873,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378079760}
   m_CullTransparentMesh: 1
+--- !u!1 &1407944587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1407944588}
+  m_Layer: 3
+  m_Name: DustSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1407944588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407944587}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15, y: -0.575, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1205777253}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1453731102
 GameObject:
   m_ObjectHideFlags: 0
