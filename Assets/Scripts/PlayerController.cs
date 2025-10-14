@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public GameObject jumpDustPrefab;
     public Transform dustSpawnPoint;
     public GameObject landDustPrefab;
-    public float landDustFowardOffset = 0.2f;
+    public float landDustFowardOffset = 0.22f;
     private bool wasGrounded;
     void Start()
     {

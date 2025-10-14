@@ -1634,6 +1634,8 @@ MonoBehaviour:
     m_Bits: 64
   jumpDustPrefab: {fileID: 4797815121946474545, guid: 1457d8d36ab884e96906b32002003e9d, type: 3}
   dustSpawnPoint: {fileID: 1407944588}
+  landDustPrefab: {fileID: 1389094781240433673, guid: b599ce1ddf67646ddb233acc8dc6bdf8, type: 3}
+  landDustFowardOffset: 0.22
 --- !u!114 &1205777261
 MonoBehaviour:
   m_ObjectHideFlags: 0
