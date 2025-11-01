@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public bool isOnFire = true;
+    private bool wasOnFire = true;
     private float Move;
     private bool jumpingEnabled = true;
     private bool horizontalEnabled = true;
@@ -28,15 +30,39 @@ public class PlayerController : MonoBehaviour
     public GameObject landDustPrefab;
     public float landDustFowardOffset = 0.22f;
     private bool wasGrounded;
+    [Header("Animator override controller to swap between the flame on and flame off states")]
+    public AnimatorOverrideController FlameOnAOC;
+    public AnimatorOverrideController FlameoffAOC;
+    [Header("Spawning smoke effect as the player transition between the states")]
+    public GameObject transitionSmokePrefab;
+    public Transform smokeSpawnPoint;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        ApplyStateChange(isOnFire,false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool faceRight = playerFlip.isFacingRight();
+        if (isOnFire != wasOnFire)
+        {
+            if (smokeSpawnPoint && transitionSmokePrefab)
+            {
+                var smoke = Instantiate(transitionSmokePrefab, smokeSpawnPoint.position, Quaternion.identity, smokeSpawnPoint);
+                var smokeSR = smoke.GetComponent<SpriteRenderer>();
+                if (smokeSR)
+                {
+                    smokeSR.flipX = !faceRight;
+                }
+            }
+            ApplyStateChange(isOnFire, true);
+            wasOnFire = isOnFire;
+        }
         if (!wasGrounded && CheckIsGrounded())
         {
             float dir = playerFlip.isFacingRight() ? 1f : -1f;
@@ -45,7 +71,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("[Dust] Spawn Pos:" + dustSpawnPoint.position);
             Debug.Log("[Dust] LandDustSpawnPos:" + landDustSpawnPos);
             var landDust = Instantiate(landDustPrefab, landDustSpawnPos, Quaternion.identity);
-            bool faceRight = playerFlip.isFacingRight();
             var sr = landDust.GetComponent<SpriteRenderer>();
             if (sr)
             {
@@ -69,7 +94,6 @@ public class PlayerController : MonoBehaviour
             if (jumpDustPrefab && dustSpawnPoint)
             {
                 var jumpDust = Instantiate(jumpDustPrefab, dustSpawnPoint.position, Quaternion.identity);
-                bool faceRight = playerFlip.isFacingRight();
                 var sr = jumpDust.GetComponent<SpriteRenderer>();
                 if (sr)
                 {
@@ -128,6 +152,23 @@ public class PlayerController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    /// <summary>
+    /// Applies the correct Animator Override Controller (AOC) based on the player's current flame state.
+    /// </summary>
+    private void ApplyStateChange(bool isOnFire, bool ifStartFromTop)
+    {
+        if (!ifStartFromTop)
+        {
+            anim.runtimeAnimatorController = isOnFire ? FlameOnAOC : FlameoffAOC;
+            return;
+        }
+        var info = anim.GetCurrentAnimatorStateInfo(0);
+        float t = Mathf.Repeat(info.normalizedTime, 1f);
+        int stateHash = info.shortNameHash;
+        anim.runtimeAnimatorController = isOnFire ? FlameOnAOC : FlameoffAOC;
+        anim.Play(stateHash, 0, t);
     }
 
     private void OnDrawGizmos()

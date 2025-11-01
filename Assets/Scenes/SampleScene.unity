@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &22108016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 22108017}
+  m_Layer: 3
+  m_Name: SmokeSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &22108017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 22108016}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1205777253}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &67122966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,6 +1520,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1407944588}
+  - {fileID: 22108017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1205777254
@@ -1658,6 +1690,10 @@ MonoBehaviour:
   dustSpawnPoint: {fileID: 1407944588}
   landDustPrefab: {fileID: 1389094781240433673, guid: b599ce1ddf67646ddb233acc8dc6bdf8, type: 3}
   landDustFowardOffset: 0.22
+  FlameOnAOC: {fileID: 22100000, guid: 85f73b662ca4545af8bd908b9c29f6dd, type: 2}
+  FlameoffAOC: {fileID: 22100000, guid: c78f57faecf0e4d52ab56508445a480a, type: 2}
+  transitionSmokePrefab: {fileID: 9108159911834284061, guid: e4b9b6f0abf664689897b3f6fd85ca8c, type: 3}
+  smokeSpawnPoint: {fileID: 22108017}
 --- !u!114 &1205777261
 MonoBehaviour:
   m_ObjectHideFlags: 0
