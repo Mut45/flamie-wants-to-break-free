@@ -11,21 +11,25 @@ public class PlayerLadderMovement : MonoBehaviour
     private bool isClimbing = false;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private GameObject platformObject;
-    private int platformLayerIndex;
-    private int playerLayerIndex;
+
+    [SerializeField] private string playerLayerName = "Player";
+    [SerializeField] private string platformLayerName = "Platform";
+    private int platformLayerIndex = -1;
+    private int playerLayerIndex = -1;
     public PlayerFlip playerFlip;
     public PlayerController playerController;
     public Collider2D playerCollider;
     private Collider2D ladderCollider;
     public PhysicsSettings physicsSettingsValues;
+    private bool ignorePlatformCollision = false;
     public Rigidbody2D rb;
 
     void Start()
     {
-        // platformLayerIndex = LayerMask.NameToLayer("Platform");
-        // playerLayerIndex = LayerMask.NameToLayer("Player");
-        // Collider2D playerCollider = playerObject.GetComponent<Collider2D>();
-        // Collider2D platformObject = platformObject.GetComponent<Collider2D>();
+        playerLayerIndex = LayerMask.NameToLayer(playerLayerName);
+        platformLayerIndex = LayerMask.NameToLayer(platformLayerName);
+        Debug.Log("[LadderMovement] platformLayerIndex: "+ playerLayerIndex);
+        Debug.Log("[LadderMovement] platformLayerIndex: "+ platformLayerIndex);
     }
     void Update()
     {
@@ -44,6 +48,10 @@ public class PlayerLadderMovement : MonoBehaviour
             // Disable gravity when on ladder
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(0, verticalInput * speed);
+            bool isGoingUpDown = verticalInput < -0.1f || verticalInput > 0.1f;
+            Debug.Log("[LadderMovement] isGoingdown: "+isGoingUpDown);
+            TogglePlatformCollision(isGoingUpDown); 
+            Debug.Log("[LadderMovement] ignoringCollision: "+ ignorePlatformCollision);
             //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, true);
             playerController.SetHorizontalEnabled(false);
             playerFlip.SetFlipEnabled(false);
@@ -53,10 +61,25 @@ public class PlayerLadderMovement : MonoBehaviour
             // Reduce speed as player exits the ladder
             //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, false);
             rb.gravityScale = physicsSettingsValues.gravityScale;
+            TogglePlatformCollision(false);
             playerController.SetHorizontalEnabled(true);
             playerFlip.SetFlipEnabled(true);
         }
     }
+
+    private void TogglePlatformCollision(bool ignore)
+    {
+        // If layers are not properly set, do nothing
+        if (playerLayerIndex < 0 || platformLayerIndex < 0)
+            return;
+
+        if (ignorePlatformCollision == ignore)
+            return;
+
+        Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, ignore);
+        ignorePlatformCollision = ignore;
+    }
+
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Ladder"))
@@ -73,8 +96,13 @@ public class PlayerLadderMovement : MonoBehaviour
             isClimbing = false;
         }
     }
+    void OnDisable()
+    {
+        TogglePlatformCollision(false);
+    }
     private bool IsFullyInside(Collider2D a, Collider2D b)
     {
+        if (a == null || b == null) return false;
         // Check if Collider a is fully inside of Collider b
         return b.bounds.Contains(a.bounds.min) && b.bounds.Contains(a.bounds.max);
     }  
