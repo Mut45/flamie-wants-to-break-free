@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LadderController : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class LadderController : MonoBehaviour
     [SerializeField] private Sprite topSprite;
     [SerializeField] private Sprite middleSprite;
     [SerializeField] private Sprite bottomSprite;
-    private SpriteRenderer ladderRenderer;
+    private TilemapRenderer ladderRenderer;
     
-    private Collider2D ladderCollider;
+    private BoxCollider2D ladderCollider;
     // Start is called before the first frame update
     void Start()
     {
-        ladderRenderer = GetComponent<SpriteRenderer>();
-        ladderCollider = GetComponent<Collider2D>();
+        ladderRenderer = GetComponent<TilemapRenderer>();
+        ladderCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
