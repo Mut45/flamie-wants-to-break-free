@@ -54,6 +54,7 @@ public class PlayerLadderMovement : MonoBehaviour
             Debug.Log("[LadderMovement] ignoringCollision: "+ ignorePlatformCollision);
             //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, true);
             playerController.SetHorizontalEnabled(false);
+            playerController.SetDustSpawnEnabled(false);
             playerFlip.SetFlipEnabled(false);
         }
         else
@@ -63,6 +64,7 @@ public class PlayerLadderMovement : MonoBehaviour
             rb.gravityScale = physicsSettingsValues.gravityScale;
             TogglePlatformCollision(false);
             playerController.SetHorizontalEnabled(true);
+            playerController.SetDustSpawnEnabled(true);
             playerFlip.SetFlipEnabled(true);
         }
     }

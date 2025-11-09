@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float Move;
     private bool jumpingEnabled = true;
     private bool horizontalEnabled = true;
+    private bool dustSpawnEnabled = true;
     public float speed;
     public float jumpForce;
     private float flameOffDuration = 3f;
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour
         bool faceRight = playerFlip.isFacingRight();
         if (isOnFire != wasOnFire)
         {
-            if (smokeSpawnPoint && transitionSmokePrefab)
+            if (smokeSpawnPoint && transitionSmokePrefab && dustSpawnEnabled)
             {
                 var smoke = Instantiate(transitionSmokePrefab, smokeSpawnPoint.position, Quaternion.identity, smokeSpawnPoint);
                 var smokeSR = smoke.GetComponent<SpriteRenderer>();
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour
             ApplyStateChange(isOnFire, true);
             wasOnFire = isOnFire;
         }
-        if (!wasGrounded && CheckIsGrounded())
+        if (!wasGrounded && CheckIsGrounded() && dustSpawnEnabled)
         {
             float dir = playerFlip.isFacingRight() ? 1f : -1f;
             Vector3 landDustSpawnPos = dustSpawnPoint.position + new Vector3(dir * landDustFowardOffset, 0f, 0f);
@@ -99,8 +100,8 @@ public class PlayerController : MonoBehaviour
                 {
                     sr.flipX = !faceRight;
                 }
-            } 
-            
+            }
+
 
         }
         if (CheckIsGrounded())
@@ -121,6 +122,10 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetFloat("verticalVelocity", rb.velocity.y);
         wasGrounded = CheckIsGrounded();
+    }
+    public void SetDustSpawnEnabled(bool input)
+    {
+        dustSpawnEnabled = input;
     }
     public void SetJumpingEnabled(bool input)
     {
