@@ -68,9 +68,9 @@ public class PlayerController : MonoBehaviour
         {
             float dir = playerFlip.isFacingRight() ? 1f : -1f;
             Vector3 landDustSpawnPos = dustSpawnPoint.position + new Vector3(dir * landDustFowardOffset, 0f, 0f);
-            Debug.Log($"dir = {dir}, dustForwardOffset = {landDustFowardOffset}");
-            Debug.Log("[Dust] Spawn Pos:" + dustSpawnPoint.position);
-            Debug.Log("[Dust] LandDustSpawnPos:" + landDustSpawnPos);
+            // Debug.Log($"dir = {dir}, dustForwardOffset = {landDustFowardOffset}");
+            // Debug.Log("[Dust] Spawn Pos:" + dustSpawnPoint.position);
+            // Debug.Log("[Dust] LandDustSpawnPos:" + landDustSpawnPos);
             var landDust = Instantiate(landDustPrefab, landDustSpawnPos, Quaternion.identity);
             var sr = landDust.GetComponent<SpriteRenderer>();
             if (sr)
