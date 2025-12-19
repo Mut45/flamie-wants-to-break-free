@@ -15,9 +15,9 @@ public class LadderController : MonoBehaviour
     private readonly List<SpriteRenderer> segmentRenderers = new List<SpriteRenderer>();
     private readonly List<Transform> runtimeFlameSpawns = new List<Transform>();
 
-    private float burnDuration = 1.5f;
-    private float respawnDelay = 5f;
-    private float blackenFadeTime = 1f;
+    private float burnDuration = 0.5f;
+    private float respawnDelay = 2f;
+    private float blackenFadeTime = 0.5f;
     private float disintegrateDuration = 2f;
     private bool isBurning = false;
     [Header("On-fire VFX")]
@@ -32,7 +32,7 @@ public class LadderController : MonoBehaviour
     private readonly Dictionary<Vector3Int, TileBase> coordinateToTileDict = new Dictionary<Vector3Int, TileBase>();
     [SerializeField] private Tilemap ladderTileMap;
     [SerializeField] private TilemapRenderer ladderRenderer;
-    private BoxCollider2D ladderCollider;
+    [SerializeField] private BoxCollider2D ladderCollider;
     [Header("Ladder Tiles Components")]
     [SerializeField] private TileBase topTile;
     [SerializeField] private TileBase bottomTile;
@@ -45,7 +45,6 @@ public class LadderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ladderCollider = GetComponent<BoxCollider2D>();
         if (ladderTileMap != null)
         {
             originalTint = ladderTileMap.color;
@@ -73,7 +72,15 @@ public class LadderController : MonoBehaviour
             }
         }
     }
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (isBurning) return;
+        if (!other.CompareTag("Player")) return;
 
+        var player = other.GetComponent<PlayerController>();
+        if (player != null && player.isOnFire)
+            StartBurning();
+    }
     private void InitTileMapping()
     {
         ladderTilesCoordinates.Clear(); // ladderCells
@@ -230,11 +237,12 @@ public class LadderController : MonoBehaviour
 
         // Remove the active flames and remove the ladder object
         ExtinguishFlames();
-        // ClearTilesAndHide();
-        // Play disintegration animation for the ladder in place of the original sprite
         ClearTilesAndHide();
+        // Play disintegration animation for the ladder in place of the original sprite
         yield return StartCoroutine(SpawnDisintegrateAnimatedPrefabs());
-
+        yield return new WaitForSeconds(respawnDelay);
+        RestoreTilesAndShow();
+        isBurning = false;
         
     }
     private System.Collections.IEnumerator BurnAndRespawnCoroutine()
