@@ -10,10 +10,12 @@ public class FanDirectionController : MonoBehaviour
     public BoxCollider2D windTriggerBox;
     public Transform windTriggerZone;
     public FanDirection direction = FanDirection.Left;
+    private Animator fanAnimator;
     // Start is called before the first frame update
 
     void Start()
     {
+        fanAnimator = GetComponent<Animator>();
         ApplyDirection();
     }
     public void RotateLeft()
@@ -47,7 +49,20 @@ public class FanDirectionController : MonoBehaviour
         }
         ApplyDirection();
     }
-
+    private int GetDirectionParamValue()
+    {
+        switch (direction)
+        {
+            case FanDirection.Left:
+                return 0;
+            case FanDirection.Up:
+                return 1;
+            case FanDirection.Right:
+                return 2;
+            default:
+                return 0;
+        }
+    }
     private float GetDirectionAngle()
     {
         switch (direction)
@@ -83,9 +98,10 @@ public class FanDirectionController : MonoBehaviour
         // windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
         windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
         triggerZoneEndpoint.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
-        if (fanController != null)
+        if (fanController != null && fanAnimator != null)
         {
             fanController.SetAirflowDirection(direction);
+            fanAnimator.SetInteger("Direction", GetDirectionParamValue());
         }
 
     }
