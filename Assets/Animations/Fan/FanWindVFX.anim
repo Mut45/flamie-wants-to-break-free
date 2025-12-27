@@ -6,9 +6,9 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FanUp
+  m_Name: FanWindVFX
   serializedVersion: 7
-  m_Legacy: 0
+  m_Legacy: 1
   m_Compressed: 0
   m_UseHighQualityCurve: 1
   m_RotationCurves: []
@@ -21,48 +21,30 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1365586302, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - time: 0.0625
-      value: {fileID: 511539182, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
+      value: {fileID: -1663074356, guid: cbf26fafdb8a5434e931cdd3fe5e41ad, type: 3}
     - time: 0.125
-      value: {fileID: 1469869933, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - time: 0.1875
-      value: {fileID: 368127069, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
+      value: {fileID: -712305769, guid: cbf26fafdb8a5434e931cdd3fe5e41ad, type: 3}
     - time: 0.25
-      value: {fileID: 1581155034, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
+      value: {fileID: 50464032, guid: cbf26fafdb8a5434e931cdd3fe5e41ad, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 16
+  m_SampleRate: 8
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 0
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: 1365586302, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - {fileID: 511539182, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - {fileID: 1469869933, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - {fileID: 368127069, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
-    - {fileID: 1581155034, guid: 3e300d5d98d0c419a966b92833c6a750, type: 3}
+    genericBindings: []
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.3125
+    m_StopTime: 0.375
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
