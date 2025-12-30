@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class FanDirectionController : MonoBehaviour
     public Transform windTriggerZone;
     public FanDirection direction = FanDirection.Left;
     private Animator fanAnimator;
-    // Start is called before the first frame update
+    public static event Action<FanController, FanDirection> OnFanDirectionChange;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class FanDirectionController : MonoBehaviour
     }
     public void RotateLeft()
     {
+        FanDirection originalDirection = direction;
         switch (direction)
         {
             case FanDirection.Right:
@@ -31,11 +33,13 @@ public class FanDirectionController : MonoBehaviour
             case FanDirection.Left:
                 break;
         }
+        if (originalDirection != direction) OnFanDirectionChange?.Invoke(fanController, direction);
         ApplyDirection();
     }
 
     public void RotateRight()
     {
+        FanDirection originalDirection = direction;
         switch (direction)
         {
             case FanDirection.Right:
@@ -46,6 +50,11 @@ public class FanDirectionController : MonoBehaviour
             case FanDirection.Left:
                 direction = FanDirection.Up;
                 break;
+        }
+        if (originalDirection != direction)
+        {
+            Debug.Log("[FanDirectionController] Fan direction changed");
+            OnFanDirectionChange?.Invoke(fanController, direction);
         }
         ApplyDirection();
     }
@@ -98,6 +107,7 @@ public class FanDirectionController : MonoBehaviour
         // windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
         windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
         triggerZoneEndpoint.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
+
         if (fanController != null && fanAnimator != null)
         {
             fanController.SetAirflowDirection(direction);
