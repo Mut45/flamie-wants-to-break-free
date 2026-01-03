@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,8 +38,10 @@ public class PlayerController : MonoBehaviour
     [Header("Spawning smoke effect as the player transition between the states")]
     public GameObject transitionSmokePrefab;
     public Transform smokeSpawnPoint;
-
-
+    [Header("Player lighting")]
+    public Light2D playerLight;
+    public float normalLightIntensity = 1.5f;
+    public float dimLightIntensity = 0.3f;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool faceRight = playerFlip.isFacingRight();
+        playerLight.intensity = isOnFire ? normalLightIntensity : dimLightIntensity;
         if (isOnFire != wasOnFire)
         {
             if (smokeSpawnPoint && transitionSmokePrefab && dustSpawnEnabled)
