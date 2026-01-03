@@ -29,6 +29,14 @@ public class FanController : MonoBehaviour
     public float strengthRight = 1.0f;
     public float strengthUp = 0.15f; // Lower this value so that the gravity doesnt overpower the airflow strength.s
 
+    void OnEnable()
+    {
+        if (FanRegistry.Instance != null) FanRegistry.Instance.Register(this);
+    }
+    void OnDisable()
+    {
+        if (FanRegistry.Instance != null) FanRegistry.Instance.Unregister(this);
+    }
     void Awake()
     {
         _triggerZone = GetComponentInChildren<Collider2D>();
