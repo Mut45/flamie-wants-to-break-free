@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -8,10 +9,11 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Player movement and collisions")]
+    [Header("Player movement, collisions and states")]
+    public bool ifStateTransitionPerm = false;
     private Rigidbody2D rb;
     private Animator anim;
-    public bool isOnFire = true;
+    public bool isOnFire = false;
     private bool wasOnFire = true;
     private float Move;
     private bool jumpingEnabled = true;
@@ -19,7 +21,10 @@ public class PlayerController : MonoBehaviour
     private bool dustSpawnEnabled = true;
     public float speed;
     public float jumpForce;
-    private float flameOffDuration = 3f;
+    [SerializeField] private float igniteFlameOnDuration = 10f;
+    [SerializeField]private float flameOffDuration = 3f;
+    private Coroutine igniteCoroutine;
+    private Coroutine extinguishCoroutine;
     public PlayerFlip playerFlip;
     [Header("Player raycast related parameters")]
     public Vector2 boxSize;
@@ -49,7 +54,6 @@ public class PlayerController : MonoBehaviour
         ApplyStateChange(isOnFire,false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         bool faceRight = playerFlip.isFacingRight();
@@ -145,7 +149,53 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(ExtinguishCoroutine());
+        if (!ifStateTransitionPerm)
+        {
+            isOnFire = false;
+        }
+        else
+        {
+            if (igniteCoroutine != null)
+            {
+                StopCoroutine(igniteCoroutine);
+            }
+            if (extinguishCoroutine != null)
+            {
+                StopCoroutine(extinguishCoroutine);
+                extinguishCoroutine = null;
+            }
+            StartCoroutine(ExtinguishCoroutine());
+        }
+        
+    }
+    //TO-DO:StartIgnite()
+    // 1. Perm check
+    public void StartIgnite()
+    {
+        if (isOnFire) return;
+        if (ifStateTransitionPerm)
+        {
+            isOnFire = true;
+        }
+        else
+        {
+            if (extinguishCoroutine != null)
+            {
+                StopCoroutine(extinguishCoroutine);
+            }
+            if (igniteCoroutine != null)
+            {
+                StopCoroutine(igniteCoroutine);
+                igniteCoroutine = null;
+            }
+            igniteCoroutine = StartCoroutine(IgniteCorotine());
+        }
+    }
+    private IEnumerator IgniteCorotine()
+    {
+        isOnFire = true;
+        yield return new WaitForSeconds(igniteFlameOnDuration);
+        isOnFire = false;
     }
     private System.Collections.IEnumerator ExtinguishCoroutine()
     {

@@ -6,12 +6,18 @@ using UnityEngine.Rendering.Universal;
 
 public class TorchController : MonoBehaviour
 {
-    private bool isTorchOn = true;
+    public bool initialState = false;
+    [SerializeField]private bool isTorchOn = true;
     private bool ifPlayerEntered = false;
+    [SerializeField] private bool isSpecialTorch = false;
     [SerializeField] PlayerController player;
-    [SerializeField] Light2D torchLight2D;
+    [SerializeField] private Light2D torchLight2D;
+    [SerializeField] private GameObject particleParentObject;
 
-    
+    void Awake()
+    {
+        SetOn(initialState);
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -28,12 +34,14 @@ public class TorchController : MonoBehaviour
             ifPlayerEntered = false;
         }
     }
+    public bool IsOn => isTorchOn;
     public void SetOn(bool ifOn)
     {
         isTorchOn = ifOn;
         if (torchLight2D != null)
         {
             torchLight2D.enabled = ifOn;
+            particleParentObject.SetActive(ifOn);
         }
 
     }
@@ -46,7 +54,10 @@ public class TorchController : MonoBehaviour
         }
         else if (isTorchOn && player != null)
         {
-            SetOn(false);
+            if (isSpecialTorch)
+            {
+                player.StartIgnite();
+            }
         }
     }
     void Update()
