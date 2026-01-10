@@ -145,10 +145,10 @@ public class PlayerController : MonoBehaviour
     }
     public void StartExtinguished()
     {
-        if (!isOnFire)
-        {
-            return;
-        }
+        // if (!isOnFire)
+        // {
+        //     return;
+        // }
         if (!ifStateTransitionPerm)
         {
             isOnFire = false;
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
     // 1. Perm check
     public void StartIgnite()
     {
-        if (isOnFire) return;
+        // if (isOnFire) return;
         if (ifStateTransitionPerm)
         {
             isOnFire = true;
@@ -196,12 +196,14 @@ public class PlayerController : MonoBehaviour
         isOnFire = true;
         yield return new WaitForSeconds(igniteFlameOnDuration);
         isOnFire = false;
+        igniteCoroutine = null;
     }
     private System.Collections.IEnumerator ExtinguishCoroutine()
     {
         isOnFire = false;
         yield return new WaitForSeconds(flameOffDuration);
         isOnFire = true;
+        extinguishCoroutine = null;
 
     }
     public bool CheckIsGrounded()
