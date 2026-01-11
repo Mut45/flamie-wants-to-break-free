@@ -5,7 +5,7 @@ using UnityEngine;
 public class CandleChallengeController : MonoBehaviour
 {
     [SerializeField] private TorchController correspondingTorch;
-    private bool ifLit;
+    public bool ifLit;
     [SerializeField] private GameObject litObject;
 
     void Awake()

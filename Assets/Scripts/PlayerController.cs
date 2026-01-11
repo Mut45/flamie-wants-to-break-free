@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     [SerializeField] private float igniteFlameOnDuration = 10f;
     [SerializeField]private float flameOffDuration = 3f;
-    private Coroutine igniteCoroutine;
-    private Coroutine extinguishCoroutine;
+    public Coroutine igniteCoroutine;
+    public Coroutine extinguishCoroutine;
     public PlayerFlip playerFlip;
     [Header("Player raycast related parameters")]
     public Vector2 boxSize;
@@ -168,6 +168,14 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+    public void ForceStopIgniteCoroutine()
+    {
+        if (igniteCoroutine != null)
+        {
+            StopCoroutine(igniteCoroutine);
+        }
+        igniteCoroutine = null;
+    }
     //TO-DO:StartIgnite()
     // 1. Perm check
     public void StartIgnite()
@@ -182,6 +190,7 @@ public class PlayerController : MonoBehaviour
             if (extinguishCoroutine != null)
             {
                 StopCoroutine(extinguishCoroutine);
+                extinguishCoroutine = null;
             }
             if (igniteCoroutine != null)
             {
