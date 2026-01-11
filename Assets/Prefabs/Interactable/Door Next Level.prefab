@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1562158288380385567, guid: 0d28653c3e4eb4cd1b1bf2b8521f327b, type: 3}
       propertyPath: isDoorOpen
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1562158288380385567, guid: 0d28653c3e4eb4cd1b1bf2b8521f327b, type: 3}
       propertyPath: openSprite

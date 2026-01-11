@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +8,7 @@ public class ScreenFader : MonoBehaviour
     public Image overlayImage;
     public IEnumerator FadeIn(float duration)
     {
+        Debug.Log($"FadeOut duration = {duration}");
         yield return Fade(1, 0, duration);
     }
     public IEnumerator FadeOut(float duration)

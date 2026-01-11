@@ -45,9 +45,12 @@ public class DoorController : MonoBehaviour
         if (playerObject == null) return;
         if (targetSP != null)
         {
-            if (areaToEnable) areaToEnable.SetActive(true);
-            if (areaToDisable) areaToDisable.SetActive(false);
-            TeleportPlayer();
+            TransitionManager.Instance.StartCoroutine(TransitionManager.Instance.Transition(() =>{
+                if (areaToEnable != null) areaToEnable.SetActive(true);
+                TeleportPlayer();
+                if (areaToDisable != null) areaToDisable.SetActive(false);
+            }));
+            
         }
     }
     private void TeleportPlayer()
