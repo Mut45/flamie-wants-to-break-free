@@ -38,20 +38,25 @@ public class PlayerLadderMovement : MonoBehaviour
         {
             isClimbing = true;
         }
+        //Debug.Log("[Ladder Movement] Is grounded:" + playerController.CheckIsGrounded());
+        if (isLadder && playerController.CheckIsGrounded() && Math.Abs(verticalInput) <= 0 && IsFullyInside(playerCollider, ladderCollider))
+        {
+            isClimbing = false;
+        }
 
     }
     void FixedUpdate()
     {
         if (isClimbing && IsFullyInside(playerCollider, ladderCollider))
         {
-            Debug.Log("Horizontal Disabled");
+            //Debug.Log("Horizontal Disabled");
             // Disable gravity when on ladder
             rb.gravityScale = 0f;
             rb.velocity = new Vector2(0, verticalInput * speed);
             bool isGoingUpDown = verticalInput < -0.1f || verticalInput > 0.1f;
-            Debug.Log("[LadderMovement] isGoingdown: "+isGoingUpDown);
+            //Debug.Log("[LadderMovement] isGoingdown: "+isGoingUpDown);
             TogglePlatformCollision(isGoingUpDown); 
-            Debug.Log("[LadderMovement] ignoringCollision: "+ ignorePlatformCollision);
+            //Debug.Log("[LadderMovement] ignoringCollision: "+ ignorePlatformCollision);
             //Physics2D.IgnoreLayerCollision(playerLayerIndex, platformLayerIndex, true);
             playerController.SetHorizontalEnabled(false);
             playerController.SetDustSpawnEnabled(false);
