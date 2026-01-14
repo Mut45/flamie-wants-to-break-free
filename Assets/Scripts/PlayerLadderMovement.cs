@@ -34,6 +34,7 @@ public class PlayerLadderMovement : MonoBehaviour
     void Update()
     {
         verticalInput = Input.GetAxisRaw("Vertical");
+        //Debug.Log("[LadderMovement] fullly inside:"+ IsFullyInside(playerCollider, ladderCollider));
         if (isLadder && Math.Abs(verticalInput) > 0 && IsFullyInside(playerCollider, ladderCollider))
         {
             isClimbing = true;

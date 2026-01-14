@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpForce;
     [SerializeField] private float igniteFlameOnDuration = 10f;
-    [SerializeField]private float flameOffDuration = 3f;
+    [SerializeField]private float flameOffDuration = 5f;
     public Coroutine igniteCoroutine;
     public Coroutine extinguishCoroutine;
     public PlayerFlip playerFlip;
