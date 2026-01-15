@@ -19,23 +19,23 @@ public class FanDirectionController : MonoBehaviour
         fanAnimator = GetComponent<Animator>();
         ApplyDirection();
     }
-    public void RotateLeft()
-    {
-        FanDirection originalDirection = direction;
-        switch (direction)
-        {
-            case FanDirection.Right:
-                direction = FanDirection.Up;
-                break;
-            case FanDirection.Up:
-                direction = FanDirection.Left;
-                break;
-            case FanDirection.Left:
-                break;
-        }
-        if (originalDirection != direction) OnFanDirectionChange?.Invoke(fanController, direction);
-        ApplyDirection();
-    }
+    // public void RotateLeft()
+    // {
+    //     FanDirection originalDirection = direction;
+    //     switch (direction)
+    //     {
+    //         case FanDirection.Right:
+    //             direction = FanDirection.Up;
+    //             break;
+    //         case FanDirection.Up:
+    //             direction = FanDirection.Left;
+    //             break;
+    //         case FanDirection.Left:
+    //             break;
+    //     }
+    //     if (originalDirection != direction) OnFanDirectionChange?.Invoke(fanController, direction);
+    //     ApplyDirection();
+    // }
 
     public void RotateRight()
     {
@@ -43,12 +43,16 @@ public class FanDirectionController : MonoBehaviour
         switch (direction)
         {
             case FanDirection.Right:
+                direction = FanDirection.RightPlus;
                 break;
             case FanDirection.Up:
                 direction = FanDirection.Right;
                 break;
             case FanDirection.Left:
                 direction = FanDirection.Up;
+                break;
+            case FanDirection.RightPlus:
+                direction = FanDirection.Left;
                 break;
         }
         if (originalDirection != direction)
@@ -68,6 +72,8 @@ public class FanDirectionController : MonoBehaviour
                 return 1;
             case FanDirection.Right:
                 return 2;
+            case FanDirection.RightPlus:
+                return 2;
             default:
                 return 0;
         }
@@ -82,6 +88,8 @@ public class FanDirectionController : MonoBehaviour
                 return -90f;
             case FanDirection.Right:
                 return 180f;
+            case FanDirection.RightPlus:
+                return 180f;
             default:
                 return 0f;
         }
@@ -89,11 +97,11 @@ public class FanDirectionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            RotateLeft();
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
+        // if (Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     RotateLeft();
+        // }
+        if (Input.GetKeyDown(KeyCode.X))
         {
             RotateRight();
         }

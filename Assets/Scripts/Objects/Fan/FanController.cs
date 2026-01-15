@@ -10,7 +10,8 @@ public enum FanDirection
 {
     Left,
     Right,
-    Up
+    Up,
+    RightPlus
 }
 public class FanController : MonoBehaviour
 {
@@ -67,6 +68,8 @@ public class FanController : MonoBehaviour
                 return Vector2.right;
             case FanDirection.Up:
                 return Vector2.up;
+            case FanDirection.RightPlus:
+                return Vector2.right;
             default:
                 return Vector2.left;
         }
@@ -112,6 +115,7 @@ public class FanController : MonoBehaviour
         {
             case FanDirection.Left: dirMultiplier = strengthLeft; break;
             case FanDirection.Right: dirMultiplier = strengthRight; break;
+            case FanDirection.RightPlus: dirMultiplier = strengthRight; break;
             case FanDirection.Up: dirMultiplier = strengthUp; break;
         }
         return dirMultiplier;
