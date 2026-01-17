@@ -16,9 +16,13 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 527262527760620934, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
+      propertyPath: doorSpriteRenderer
+      value: 
+      objectReference: {fileID: 3134840951380292247}
     - target: {fileID: 1542172936921574097, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 1542172936921574097, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingLayerID
@@ -30,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4142715627474073102, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4142715627474073102, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingOrder
@@ -90,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8169874059800855637, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8169874059800855637, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
       propertyPath: m_SortingOrder
@@ -112,6 +116,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7870976337541720718}
   m_SourcePrefab: {fileID: 100100000, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
+--- !u!212 &3134840951380292247 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4142715627474073102, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
+  m_PrefabInstance: {fileID: 1368198006290220185}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8273232404527607453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6930122694965717508, guid: 3332d33449639b44dbb1148ec417d162, type: 3}
