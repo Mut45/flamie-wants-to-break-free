@@ -145,25 +145,30 @@ public class PlayerController : MonoBehaviour
     }
     public void StartExtinguished()
     {
-        // if (!isOnFire)
-        // {
-        //     return;
-        // }
+        if (igniteCoroutine != null)
+        {
+            StopCoroutine(igniteCoroutine);
+        }
+        if (extinguishCoroutine != null)
+        {
+            StopCoroutine(extinguishCoroutine);
+            extinguishCoroutine = null;
+        }
         if (!ifStateTransitionPerm)
         {
             isOnFire = false;
         }
         else
         {
-            if (igniteCoroutine != null)
-            {
-                StopCoroutine(igniteCoroutine);
-            }
-            if (extinguishCoroutine != null)
-            {
-                StopCoroutine(extinguishCoroutine);
-                extinguishCoroutine = null;
-            }
+            // if (igniteCoroutine != null)
+            // {
+            //     StopCoroutine(igniteCoroutine);
+            // }
+            // if (extinguishCoroutine != null)
+            // {
+            //     StopCoroutine(extinguishCoroutine);
+            //     extinguishCoroutine = null;
+            // }
             StartCoroutine(ExtinguishCoroutine());
         }
         

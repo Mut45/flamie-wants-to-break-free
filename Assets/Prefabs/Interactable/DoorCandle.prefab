@@ -104,6 +104,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 507125787666417728, guid: 546a546651def44afa5b7eef04a41803, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1530797622492249879, guid: 546a546651def44afa5b7eef04a41803, type: 3}
       propertyPath: isDoorOpen
       value: 0
@@ -150,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8233697178127665301, guid: 546a546651def44afa5b7eef04a41803, type: 3}
       propertyPath: m_Name
-      value: Door Next Level Variant
+      value: DoorCandle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

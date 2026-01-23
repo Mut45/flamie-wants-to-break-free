@@ -23,6 +23,8 @@ public class DoorController : MonoBehaviour
     public SpriteRenderer doorSpriteRenderer;
     private bool ifPlayerEntered = false;
 
+    protected virtual bool IsFenceUp() => true;
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -75,7 +77,7 @@ public class DoorController : MonoBehaviour
     {
         isDoorOpen = open;
     }
-    void Update()
+    protected virtual void Update()
     {
         if (!isDoorOpen)
         {
@@ -86,7 +88,7 @@ public class DoorController : MonoBehaviour
         {
             doorSpriteRenderer.sprite = openSprite;
         }
-        if(isDoorOpen && ifPlayerEntered && Input.GetKeyDown(KeyCode.UpArrow))
+        if(isDoorOpen && IsFenceUp() && ifPlayerEntered && Input.GetKeyDown(KeyCode.UpArrow))
         {
             OnInteraction();
         }  

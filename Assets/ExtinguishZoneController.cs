@@ -10,7 +10,6 @@ public class ExtinguishZoneController : MonoBehaviour
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.ifStateTransitionPerm = false;
-            player.StartExtinguished();
         }
     }
 }
