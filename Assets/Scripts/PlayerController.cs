@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Cainos.LucidEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -47,10 +48,13 @@ public class PlayerController : MonoBehaviour
     public Light2D playerLight;
     public float normalLightIntensity = 1.5f;
     public float dimLightIntensity = 0.3f;
+    [Header("Player Invetory")]
+    private PlayerInventoryManager inventory;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        inventory = GetComponent<PlayerInventoryManager>();
         ApplyStateChange(isOnFire,false);
     }
 

@@ -9,6 +9,12 @@ public class IceCubeController : MonoBehaviour
     [SerializeField] private Animator iceCubeAnimator;
     [SerializeField] private PlayerController player;
     [SerializeField] private PlugController snappedToPlug;
+    private bool hasMelted = false;
+    public bool HasMelted
+    {
+        get => hasMelted;
+        set => hasMelted = value;
+    }
     public void OnEnable()
     {
         iceCubeAnimator = GetComponent<Animator>();
@@ -23,7 +29,7 @@ public class IceCubeController : MonoBehaviour
     {
         snappedToPlug = plug;
     }
-    private bool hasMelted = false;
+    
 
     public void OnMeltingAnimationEnd()
     {
