@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         bool faceRight = playerFlip.isFacingRight();
         playerLight.intensity = isOnFire ? normalLightIntensity : dimLightIntensity;
+        if (InputLocked) return; 
         if (isOnFire != wasOnFire)
         {
             if (smokeSpawnPoint && transitionSmokePrefab && dustSpawnEnabled)
@@ -185,8 +186,7 @@ public class PlayerController : MonoBehaviour
         }
         igniteCoroutine = null;
     }
-    //TO-DO:StartIgnite()
-    // 1. Perm check
+    
     public void StartIgnite()
     {
         // if (isOnFire) return;
@@ -233,9 +233,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// Applies the correct Animator Override Controller (AOC) based on the player's current flame state.
-    /// </summary>
+    // Applies the correct Animator Override Controller (AOC) based on the player's current flame state.
     private void ApplyStateChange(bool isOnFire, bool ifStartFromTop)
     {
         if (!ifStartFromTop)
@@ -249,7 +247,13 @@ public class PlayerController : MonoBehaviour
         anim.runtimeAnimatorController = isOnFire ? FlameOnAOC : FlameoffAOC;
         anim.Play(stateHash, 0, t);
     }
-
+    // Controls the input lock logic for the player drag mode.
+    public bool InputLocked { get; private set; }
+    public void SetInputLocked(bool locked)
+    {
+        InputLocked = locked;
+        if (locked) GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
     private void OnDrawGizmos()
     {
         // Help visualize the box cast for ray casting

@@ -23,6 +23,7 @@ public class IceMachineController : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        if(!isActive) iceMachineAnimator.SetBool("IsUnattached", true);
     }
     void Update()
     {
@@ -58,6 +59,16 @@ public class IceMachineController : MonoBehaviour
         isBusy = true;
         iceMachineAnimator.SetTrigger("ProduceIce");
         // StartCoroutine(ShakeAndDropIceCube());
+    }
+    public void OnWaterTankDelivered()
+    {
+        //TODO
+        // 1. Set active
+        // 2. Set animation bool
+        if(!isActive) isActive = true;
+        if(iceMachineAnimator) iceMachineAnimator.SetBool("IsAttached", true);
+        
+        Debug.Log("Water tank delivered");
     }
     private IEnumerator ShakeAndDropIceCube()
     {
