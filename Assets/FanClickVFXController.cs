@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering;
 
 public class FanClickVFXController : MonoBehaviour
@@ -20,6 +21,7 @@ public class FanClickVFXController : MonoBehaviour
     [SerializeField] private RectTransform indicator;
     [SerializeField] private GameObject clickVFXPrefab;
     [SerializeField] private Vector3 clickVfxOffset = new Vector3(0.2f, 0.2f, 0);
+    public OffscreenFanArcIndicatorUI fanArcUI;
 
     [Header("Indicator flash tuning")]
     [SerializeField] private float padding = 50f;
@@ -67,29 +69,33 @@ public class FanClickVFXController : MonoBehaviour
         }
         else
         {
-            //TO-DO: add off screen edge flashes
             // - find the nearest off-screen fan
             FanController closestFan = GetClosestFan(FanRegistry.Instance.Fans);
             // Debug.Log("[FanClickVFX] Closest fan's location is:" + closestFan.transform.position);
             if (closestFan.transform.position == fc.transform.position)
             {
-                Debug.Log("[FanClickVFX] found the closest off-screen fan)" + closestFan.transform.position);
-                // - clamp the position at the screen bounds
-                Vector3 targetToScreenPos = cam.WorldToScreenPoint(targetFanPos);
-                Vector2 clampedPos = ClampToEdge(new Vector2(targetToScreenPos.x, targetToScreenPos.y), padding); // Clamped position of the closest fan in terms of screen pixels(where the indicator should be)
-                Debug.Log("[FanClickVFX] Off-screen fan clamped position is" + clampedPos.ToString());
-                // - translate the screen position to a canvas local space position
+                Vector2 dir = (closestFan.transform.position - player.transform.position).normalized;
+                float directionDegree = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                Debug.Log("[FanClickVFX] direction degree:" + directionDegree);
+                indicator.GetComponent<OffscreenFanArcIndicatorUI>().SetupAllIndicatorComponents(directionDegree, 1f);
+                // Debug.Log("[FanClickVFX] found the closest off-screen fan)" + closestFan.transform.position);
+                // // - clamp the position at the screen bounds
+                // Vector3 targetToScreenPos = cam.WorldToScreenPoint(targetFanPos);
+                // Vector2 clampedPos = ClampToEdge(new Vector2(targetToScreenPos.x, targetToScreenPos.y), padding); // Clamped position of the closest fan in terms of screen pixels(where the indicator should be)
+                // Debug.Log("[FanClickVFX] Off-screen fan clamped position is" + clampedPos.ToString());
+                // // - translate the screen position to a canvas local space position
 
-                if (canvas != null && cam != null && clampedPos != null)
-                {
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, clampedPos, null, out Vector2 localPoint);
-                    Debug.Log("[FanClickVFX] local point pos:" + localPoint);
-                    // - move the edge indicator to the clamped position
-                    indicator.anchoredPosition = localPoint;
-                    Debug.Log($"[FanClickVFX] MOVED indicator to {indicator.anchoredPosition}");
-                    // - start the indicator flashing coroutine
-                    ActivateFlashCoroutine();
-                }
+                // if (canvas != null && cam != null && clampedPos != null)
+                // {
+                //     RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, clampedPos, null, out Vector2 localPoint);
+                //     Debug.Log("[FanClickVFX] local point pos:" + localPoint);
+                //     // - move the edge indicator to the clamped position
+                //     indicator.anchoredPosition = localPoint;
+                //     Debug.Log($"[FanClickVFX] MOVED indicator to {indicator.anchoredPosition}");
+                //     // - start the indicator flashing coroutine
+                //     ActivateFlashCoroutine();
+                // }
+                ActivateFlashCoroutine();
             }
             return;
         }
