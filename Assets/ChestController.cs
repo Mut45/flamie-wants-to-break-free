@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class ChestController : Interactable
     [SerializeField] private GameObject pickupPopupPrefab;
     [SerializeField] private Sprite chestOpenSprite;
     [SerializeField] private Sprite chestCloseSprite;
+    public String itemName;
     private SpriteRenderer sr;
 
     void Start()
@@ -31,6 +33,6 @@ public class ChestController : Interactable
             if (popupScript != null) popupScript.SetIcon(itemSprite);
         }
         PlayerInventoryManager playerInvetory = player.GetComponent<PlayerInventoryManager>();
-        playerInvetory.Add("Remote");
+        playerInvetory.Add(itemName);
     }
 }
