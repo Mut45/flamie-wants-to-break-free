@@ -19,7 +19,11 @@ public class CandleChallengeController : MonoBehaviour
     public bool IfLit => ifLit;
     void Update()
     {
-        if (ifLit) return;
+        if (litObject.activeSelf && ifLit) return;
+        else if (!litObject.activeSelf && ifLit)
+        {
+            litObject.SetActive(true);
+        }
         if (litObject != null && correspondingTorch != null)
         {
             if (correspondingTorch.IsOn)
