@@ -13,6 +13,7 @@ public class PlayerDragMode : MonoBehaviour
     {
         InDragMode = !InDragMode;
         player.SetInputLocked(InDragMode);
+        Debug.Log("[DragMode] Drag mode on");
         if (InDragMode)
         {
            CursorSprite.Instance?.SetDragReady();
