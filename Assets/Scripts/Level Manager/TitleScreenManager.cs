@@ -44,7 +44,7 @@ public class TitleScreenManager : MonoBehaviour
         PlayerPrefs.SetString("PLAYER_NAME", playerName);
         PlayerPrefs.Save();
         
-        // TODO: Load the gameplay scene
+        SceneManager.LoadScene("GameplayScene");
     }
 
     private IEnumerator FadeFlowCoroutine()

@@ -51,13 +51,13 @@ public class PlayerController : MonoBehaviour
     [Header("Player Invetory")]
     private PlayerInventoryManager inventory;
     [Header("Opening Scene")]
-    [SerializeField] private bool isNonPlayer = false;
+    [SerializeField] private bool isWizard = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         inventory = GetComponent<PlayerInventoryManager>();
-        if (isNonPlayer) return;
+        if (isWizard) return;
         ApplyStateChange(isOnFire,false);
     }
 
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
-        if (isNonPlayer) return;
+        if (isWizard) return;
 
         // Flame state transition
         if (isOnFire != wasOnFire)

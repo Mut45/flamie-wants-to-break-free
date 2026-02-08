@@ -29,6 +29,7 @@ public class NamePromptController : MonoBehaviour
     } 
     private void Submit()
     {
+        Debug.Log("[Start Screen] Submit started!");
         if(titleScreenManager == null || nameInput == null) return;
         string playerName = nameInput.text.Trim();
 

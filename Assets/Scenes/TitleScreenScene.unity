@@ -519,6 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 222781554}
   - component: {fileID: 222781555}
+  - component: {fileID: 222781556}
   m_Layer: 5
   m_Name: PlayerNamePromptPanel
   m_TagString: Untagged
@@ -561,6 +562,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 331805117}
   charsInputPerSecs: 15
+--- !u!114 &222781556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222781553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a946f6619619940119a75de41431be71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleScreenManager: {fileID: 111553703}
+  nameInput: {fileID: 539747615}
+  textPrompt: {fileID: 331805117}
+  minLength: 1
+  maxLength: 10
 --- !u!1 &260447124
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,7 +2552,7 @@ MonoBehaviour:
   playerLight: {fileID: 170725028}
   normalLightIntensity: 3
   dimLightIntensity: 1
-  isNonPlayer: 0
+  isWizard: 0
 --- !u!114 &1219848504
 MonoBehaviour:
   m_ObjectHideFlags: 0
