@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TerrainUtils;
 
 public class DialogueTypewriterController : MonoBehaviour
 {
@@ -39,7 +40,9 @@ public class DialogueTypewriterController : MonoBehaviour
         isTyping = true;
         text.text = textLine;
         text.maxVisibleCharacters = 0;
-        int totalChars = text.textInfo.characterCount;
+        // int totalChars = text.textInfo.characterCount;
+        int totalChars = textLine.Length;
+        
         while (text.maxVisibleCharacters < totalChars)
         {
             text.maxVisibleCharacters ++;
