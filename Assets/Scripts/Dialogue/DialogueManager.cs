@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
     private string[] linesToType;
     private int currentIndex;
     private bool ifDialogueActive;
+    private System.Action _onFinished;
 
     void Update()
     {
@@ -21,8 +22,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void StartDialogue(string[] dialogueLines)
+    public void StartDialogue(string[] dialogueLines, System.Action onFinished = null)
     {
+        _onFinished = onFinished;
         dialoguePanel.SetActive(true);
         ifDialogueActive = true;
         linesToType = dialogueLines;
@@ -57,5 +59,8 @@ public class DialogueManager : MonoBehaviour
 
         // Unlock player's input
         player.SetInputLocked(false);
+        _onFinished?.Invoke();
+        _onFinished = null;
+        currentIndex = 0;
     }
 }

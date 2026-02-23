@@ -64,8 +64,29 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         bool faceRight = playerFlip.isFacingRight();
-        playerLight.intensity = isOnFire ? normalLightIntensity : dimLightIntensity;
-        // Movement
+        if (playerLight != null) playerLight.intensity = isOnFire ? normalLightIntensity : dimLightIntensity;
+        if (!wasGrounded && CheckIsGrounded() && dustSpawnEnabled)
+        {
+            float dir = playerFlip.isFacingRight() ? 1f : -1f;
+            Vector3 landDustSpawnPos = dustSpawnPoint.position + new Vector3(dir * landDustFowardOffset, 0f, 0f);
+            // Debug.Log($"dir = {dir}, dustForwardOffset = {landDustFowardOffset}");
+            // Debug.Log("[Dust] Spawn Pos:" + dustSpawnPoint.position);
+            // Debug.Log("[Dust] LandDustSpawnPos:" + landDustSpawnPos);
+            var landDust = Instantiate(landDustPrefab, landDustSpawnPos, Quaternion.identity);
+            var sr = landDust.GetComponent<SpriteRenderer>();
+            if (sr)
+            {
+                sr.flipX = !faceRight;
+            }
+        }
+        if (CheckIsGrounded())
+        {
+            anim.SetBool("isGrounded", true);
+        }
+        else
+        {
+            anim.SetBool("isGrounded", false);
+        }
         if (InputLocked) return; 
         if (Move != 0)
         {
@@ -101,21 +122,6 @@ public class PlayerController : MonoBehaviour
             ApplyStateChange(isOnFire, true);
             wasOnFire = isOnFire;
         }
-        if (!wasGrounded && CheckIsGrounded() && dustSpawnEnabled)
-        {
-            float dir = playerFlip.isFacingRight() ? 1f : -1f;
-            Vector3 landDustSpawnPos = dustSpawnPoint.position + new Vector3(dir * landDustFowardOffset, 0f, 0f);
-            // Debug.Log($"dir = {dir}, dustForwardOffset = {landDustFowardOffset}");
-            // Debug.Log("[Dust] Spawn Pos:" + dustSpawnPoint.position);
-            // Debug.Log("[Dust] LandDustSpawnPos:" + landDustSpawnPos);
-            var landDust = Instantiate(landDustPrefab, landDustSpawnPos, Quaternion.identity);
-            var sr = landDust.GetComponent<SpriteRenderer>();
-            if (sr)
-            {
-                sr.flipX = !faceRight;
-            }
-        }
-
 
         if (Input.GetButtonDown("Jump") && CheckIsGrounded() && jumpingEnabled)
         {
@@ -133,14 +139,14 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        if (CheckIsGrounded())
-        {
-            anim.SetBool("isGrounded", true);
-        }
-        else
-        {
-            anim.SetBool("isGrounded", false);
-        }
+        // if (CheckIsGrounded())
+        // {
+        //     anim.SetBool("isGrounded", true);
+        // }
+        // else
+        // {
+        //     anim.SetBool("isGrounded", false);
+        // }
 
         anim.SetFloat("verticalVelocity", rb.velocity.y);
         wasGrounded = CheckIsGrounded();

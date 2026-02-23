@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2707281805887744995, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2707281805887744995, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingOrder
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4029444947252226282, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4029444947252226282, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingOrder
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.73
+      value: -0.77
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -110,15 +110,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 5379667258367228034, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -130,7 +130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6760436614971753472, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingLayer
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6760436614971753472, guid: 00f599e74c0b0154d8f11697b9dc849b, type: 3}
       propertyPath: m_SortingOrder
@@ -170,15 +170,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
-  m_LightType: 3
+  m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 0.1254902, g: 0.21960784, b: 0.22745098, a: 1}
   m_Intensity: 7.58
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 5b96cd398f2e5dad000000006928e9ef674bf08bb30c9367
-  m_LightCookieSprite: {fileID: 0}
+  m_ApplyToSortingLayers: 5b96cd398f2e5dad6928e9ef674bf08bb30c9367
+  m_LightCookieSprite: {fileID: -161554478, guid: b0b6ee23ae64c184f898c3a604a90e12, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
@@ -191,8 +191,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0, y: -0.00000011920929, z: 0}
-    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+    m_Center: {x: 0, y: 0.15625, z: 0}
+    m_Extent: {x: 1.5, y: 1.125, z: 0}
   m_PointLightInnerAngle: 98.63014
   m_PointLightOuterAngle: 98.63014
   m_PointLightInnerRadius: 0.27
