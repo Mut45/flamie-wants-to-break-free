@@ -1,0 +1,159 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FanDirectionController : MonoBehaviour
+{
+    public FanController fanController;
+    public Transform triggerZoneOrigin;
+    public Transform triggerZoneEndpoint;
+    public BoxCollider2D windTriggerBox;
+    public Transform windTriggerZone;
+    public FanDirection direction = FanDirection.Left;
+    private Animator fanAnimator;
+    public static event Action<FanController, FanDirection> OnFanDirectionChange;
+
+    void Start()
+    {
+        fanAnimator = GetComponent<Animator>();
+        ApplyDirection();
+    }
+    // public void RotateLeft()
+    // {
+    //     FanDirection originalDirection = direction;
+    //     switch (direction)
+    //     {
+    //         case FanDirection.Right:
+    //             direction = FanDirection.Up;
+    //             break;
+    //         case FanDirection.Up:
+    //             direction = FanDirection.Left;
+    //             break;
+    //         case FanDirection.Left:
+    //             break;
+    //     }
+    //     if (originalDirection != direction) OnFanDirectionChange?.Invoke(fanController, direction);
+    //     ApplyDirection();
+    // }
+
+    public void RotateRight()
+    {
+        FanDirection originalDirection = direction;
+        switch (direction)
+        {
+            case FanDirection.Right:
+                direction = FanDirection.RightPlus;
+                break;
+            case FanDirection.Up:
+                direction = FanDirection.Right;
+                break;
+            case FanDirection.Left:
+                direction = FanDirection.Up;
+                break;
+            case FanDirection.RightPlus:
+                direction = FanDirection.Left;
+                break;
+        }
+        if (originalDirection != direction)
+        {
+            Debug.Log("[FanDirectionController] Fan direction changed");
+            OnFanDirectionChange?.Invoke(fanController, direction);
+        }
+        ApplyDirection();
+    }
+    private int GetDirectionParamValue()
+    {
+        switch (direction)
+        {
+            case FanDirection.Left:
+                return 0;
+            case FanDirection.Up:
+                return 1;
+            case FanDirection.Right:
+                return 2;
+            case FanDirection.RightPlus:
+                return 2;
+            default:
+                return 0;
+        }
+    }
+    private float GetDirectionAngle()
+    {
+        switch (direction)
+        {
+            case FanDirection.Left:
+                return 0f;
+            case FanDirection.Up:
+                return -90f;
+            case FanDirection.Right:
+                return 180f;
+            case FanDirection.RightPlus:
+                return 180f;
+            default:
+                return 0f;
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        // if (Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     RotateLeft();
+        // }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            RotateRight();
+        }
+    }
+    private void ApplyDirection()
+    {
+        // Rotate the tri
+        float directionAngle = GetDirectionAngle();
+        // Rotation angle in radians, right is 0 degree, up is 90 degrees, left is 180 degrees
+        // float rotationAngle = Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
+        // windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, rotationAngle);
+        windTriggerZone.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
+        triggerZoneEndpoint.localRotation = Quaternion.Euler(0f, 0f, directionAngle);
+
+        if (fanController != null && fanAnimator != null)
+        {
+            fanController.SetAirflowDirection(direction);
+            fanAnimator.SetInteger("Direction", GetDirectionParamValue());
+        }
+
+    }
+    private void OnDrawGizmos()
+    {
+        if (windTriggerZone != null)
+        {
+            Gizmos.color = new Color(0f, 1f, 1f, 0.3f); // cyan, semi-transparent
+                                                        // Draw a wire cube around the windZone position
+                                                        // Use local rotation to respect its orientation
+            Matrix4x4 oldMatrix = Gizmos.matrix;
+            Gizmos.matrix = windTriggerZone.localToWorldMatrix;
+            Gizmos.DrawWireCube(Vector3.zero, windTriggerZone.GetComponent<BoxCollider2D>().size);
+            Gizmos.matrix = oldMatrix;
+        }
+        if (windTriggerBox != null)
+        {
+            var b = windTriggerBox.bounds;
+            Gizmos.color = new Color(1f, 1f, 0f, 0.6f); // yellow
+            Gizmos.DrawWireCube(b.center, b.size);
+        }
+            Gizmos.color = Color.red;
+
+        if (triggerZoneEndpoint != null)
+        {
+            // Draw a small sphere to show its position
+            Gizmos.DrawSphere(triggerZoneEndpoint.position, 0.1f);
+
+            // Optionally draw a line from the origin to it for clarity
+            if (triggerZoneOrigin != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(triggerZoneOrigin.position, triggerZoneEndpoint.position);
+            }
+        }
+    }
+}

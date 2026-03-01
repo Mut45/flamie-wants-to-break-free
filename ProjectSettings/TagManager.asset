@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Ladder
+  - PlacementArea
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - Ground
   - Platform
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Ice Cube
+  - Ice Cube At Spawn
+  - Placement Area
   - 
   - 
   - 
@@ -40,12 +41,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
+  - name: Background
+    uniqueID: 2908565135
     locked: 0
   - name: Objects
     uniqueID: 4025034857
     locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Dark Background
+    uniqueID: 2619698381
+    locked: 0
+  - name: Dark Objects
+    uniqueID: 3249163107
+    locked: 0
+  - name: Darkness
+    uniqueID: 1737690291
+    locked: 0
+  - name: OpeningScene
+    uniqueID: 571361581
+    locked: 0
   - name: Player
     uniqueID: 2347780967
+    locked: 0
+  - name: UI
+    uniqueID: 969774683
     locked: 0
